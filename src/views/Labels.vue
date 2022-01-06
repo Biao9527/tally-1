@@ -1,7 +1,7 @@
 <template>
-<Nav>
-  Labels.vue
-</Nav>
+  <Nav>
+    Labels.vue
+  </Nav>
 </template>
 
 <script lang="ts">
