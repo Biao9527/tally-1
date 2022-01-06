@@ -1,8 +1,88 @@
 <template>
-  <div>
-    statistics
-    <Nav/>
-  </div>
+  <Nav>
+    <p>
+      statistics.vue
+    </p>
+    <p>
+      statistics.vue
+    </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p> <p>
+    statistics.vue
+  </p>
+  </Nav>
 </template>
 
 <script lang="ts">
