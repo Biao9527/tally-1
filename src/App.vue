@@ -15,6 +15,6 @@ body{
 }
 a{
   text-decoration: none;
-  color: inherit;
+  color: #999;
 }
 </style>

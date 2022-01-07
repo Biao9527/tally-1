@@ -4,17 +4,17 @@
       <slot/>
     </div>
     <nav class="nav">
-      <router-link to="/labels" class="item">
+      <router-link to="/labels" class="item" active-class="selected">
         <Icon name="labels"/>
-        标签
+        <p>标签</p>
       </router-link>
-      <router-link to="/money" class="item">
+      <router-link to="/money" class="item" active-class="selected">
         <Icon name="money"/>
-        记账
+        <p>记账</p>
       </router-link>
-      <router-link to="/statistics" class="item">
+      <router-link to="/statistics" class="item" active-class="selected">
         <Icon name="statistics"/>
-        统计
+        <p>统计</p>
       </router-link>
     </nav>
   </div>
@@ -32,7 +32,6 @@ export default {
 <style lang="scss" scoped>
 nav {
   display: flex;
-  box-shadow: 0 0 3px rgba(0,0,0.85);
   > .item{
     margin-top: 5px;
     width: 33.33333%;
@@ -41,6 +40,9 @@ nav {
     justify-content: center;
     align-items: center;
     font-size: 14px;
+  }
+  > .item.selected{
+    color: #ff852a;
   }
 }
 
@@ -51,7 +53,7 @@ nav {
 }
 
 .content {
-  background: lightgoldenrodyellow;
+  background: #f4f4f4;
   overflow: auto;
   flex-grow: 1;
 }
