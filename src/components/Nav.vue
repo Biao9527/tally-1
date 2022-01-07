@@ -4,21 +4,26 @@
       <slot/>
     </div>
     <div class="nav">
+      <router-link to="/labels">
+        <Icon name="labels"/>
+        标签
+      </router-link>
       <router-link to="/money">
-        <svg>
-          <use xlink:href="#labels"/>
-        </svg>
-        记账</router-link>
-      <router-link to="/labels">标签</router-link>
-      <router-link to="/statistics">统计</router-link>
+        <Icon name="money"/>
+        记账
+      </router-link>
+      <router-link to="/statistics">
+        <Icon name="statistics"/>
+        统计
+      </router-link>
     </div>
   </div>
 </template>
 
-<script>
-import x from '@/assets/icons/labels.svg'
+<script lang="ts">
 
-console.log(x);
+
+
 export default {
   name: 'Nav'
 };
@@ -26,11 +31,9 @@ export default {
 
 <style scoped>
 .nav {
-  border: 1px solid red;
 }
 
 .nav-wrapper {
-  border: 1px solid green;
   display: flex;
   height: 100vh;
   flex-direction: column;
