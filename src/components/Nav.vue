@@ -30,6 +30,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/assets/style/helper.scss";
 nav {
   display: flex;
   > .item{
@@ -42,7 +43,7 @@ nav {
     font-size: 14px;
   }
   > .item.selected{
-    color: #ff852a;
+    color: $color-highlight;
   }
 }
 
@@ -53,7 +54,7 @@ nav {
 }
 
 .content {
-  background: #f4f4f4;
+  background: $color-background;
   overflow: auto;
   flex-grow: 1;
 }
