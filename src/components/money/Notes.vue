@@ -3,7 +3,7 @@
         <span>
          <Icon name="remark"/>
           备注:</span>
-    <input type="text" @input="onInput" :value="value" placeholder="在这里输入备注">
+    <input type="text" v-model="value" placeholder="在这里输入备注">
   </table>
 </template>
 
@@ -14,10 +14,6 @@ import {Component} from 'vue-property-decorator';
 @Component
 export default class notes extends Vue{
   value = ''
-  onInput(event:KeyboardEvent){
-    const input = event.target as HTMLInputElement
-    this.value = input.value
-  }
 }
 </script>
 
