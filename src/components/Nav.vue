@@ -1,6 +1,6 @@
 <template>
   <div class="nav-wrapper">
-    <div class="content">
+    <div class="content" :class="classPrefix&&`${classPrefix}-content`">
       <slot/>
     </div>
     <nav class="nav">
@@ -25,7 +25,8 @@
 
 
 export default {
-  name: 'Nav'
+  name: 'Nav',
+  props: ['classPrefix']
 };
 </script>
 

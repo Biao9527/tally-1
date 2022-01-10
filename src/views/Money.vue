@@ -1,46 +1,48 @@
 <template>
-  <Nav>
+  <Nav class="xxx" class-prefix="nav">
+    <div class="numberPad">
+      <div class="number">100</div>
+      <div class="buttons">
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>删除</button>
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+        <button>清空</button>
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+        <button class="ok">OK</button>
+        <button class="zone">0</button>
+        <button>.</button>
+      </div>
+    </div>
+    <div>
+      <table class="notes">
+        <span>
+         <Icon name="remark"/>
+          备注:</span>
+        <input type="text" placeholder="在这里输入备注">
+      </table>
+    </div>
     <div class="tags">
-      <ul>
+      <div class="new">
+        <button>新增标签</button>
+      </div>
+      <ul class="current">
         <li>衣</li>
         <li>食</li>
         <li>住</li>
         <li>行</li>
       </ul>
-      <div class="new">
-        <button>新增标签</button>
-      </div>
     </div>
     <div>
-      <table class="notes">
-        <span>备注</span>
-        <input type="text">
-      </table>
-    </div>
-    <div>
-      <ul>
-        <li>支出</li>
+      <ul class="types">
+        <li class="selected">支出</li>
         <li>收入</li>
       </ul>
-    </div>
-    <div class="numberPad">
-      <div class="number">100</div>
-    <div class="buttons">
-      <button>1</button>
-      <button>2</button>
-      <button>3</button>
-      <button>删除</button>
-      <button>4</button>
-      <button>5</button>
-      <button>6</button>
-      <button>清空</button>
-      <button>7</button>
-      <button>8</button>
-      <button>9</button>
-      <button>OK</button>
-      <button>0</button>
-      <button>.</button>
-    </div>
     </div>
   </Nav>
 </template>
@@ -51,6 +53,160 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss">
+.nav-content {
+  display: flex;
+  flex-direction: column-reverse;
+}
+</style>
+<style lang="scss" scoped>
+@import "~@/assets/style/helper.scss";
 
+.numberPad {
+  .number {
+    font-size: 32px;
+    text-align: right;
+    padding: 9px 16px;
+    background: #ffffff;
+    font-family: Consolas, monospace;
+    box-shadow: inset 0 -3px 3px -3px fade-out(black, 0.7),
+    inset 0 3px 3px -3px fade-out(black, 0.7);
+  }
+
+  .buttons {
+    @extend %clearFix;
+
+    > button {
+      width: 25%;
+      height: 64px;
+      float: left;
+      background: transparent;
+      border: none;
+      $bg: #f2f2f2;
+
+      &:nth-child(1) {
+        background: $bg;
+      }
+
+      &:nth-child(2), &:nth-child(5) {
+        background: darken($bg, 4%);
+      }
+
+      &:nth-child(3), &:nth-child(6), &:nth-child(9) {
+        background: darken($bg, 4*2%);
+      }
+
+      &:nth-child(4), &:nth-child(7), &:nth-child(10) {
+        background: darken($bg, 4*3%);
+      }
+
+      &:nth-child(8), &:nth-child(11), &:nth-child(13) {
+        background: darken($bg, 4*4%);
+      }
+
+      &:nth-child(14) {
+        background: darken($bg, 4*5%);
+      }
+
+      &:nth-child(12) {
+        background: darken($bg, 4*6%);
+      }
+
+      &.ok {
+        float: right;
+        height: 64px*2;
+      }
+
+      &.zone {
+        width: 50%;
+      }
+    }
+  }
+}
+
+.types {
+  display: flex;
+  font-size: 20px;
+  text-align: center;
+  background: #ff6200;
+  color: #f0e0dc;
+
+  li {
+    width: 50%;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    &.selected::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      width: 100%;
+      background: #333333;
+    }
+  }
+}
+
+.notes {
+  display: flex;
+  background: #f4f4f4;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+
+  span {
+    padding: 0 16px;
+    .icon {
+      width: 1em;
+      height: 1em;
+      vertical-align: -0.15em;
+      fill: currentColor;
+      overflow: hidden;
+    }
+  }
+
+  input {
+    height: 40px;
+    background: transparent;
+    border: none;
+  }
+}
+
+.tags {
+  font-size: 14px;
+  padding: 16px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column-reverse;
+
+  > .current {
+    display: flex;
+    flex-wrap: wrap;
+    > li {
+      background: #FF6200;
+      color: #fff;
+      line-height: 24px;
+      height: 24px;
+      border-radius: 12px;
+      padding: 0 16px;
+      margin-right: 10px;
+      margin-top: 4px;
+    }
+  }
+
+  > .new {
+    margin-top: 16px;
+
+    > button {
+      background: transparent;
+      border: none;
+      color: #999999;
+      border-bottom: 1px solid;
+      padding: 0 4px;
+    }
+  }
+}
 </style>
