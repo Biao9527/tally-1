@@ -9,11 +9,17 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 
 @Component
-export default class notes extends Vue{
-  value = ''
+export default class notes extends Vue {
+  @Prop(String) readonly notes!: string;
+  value = '';
+
+  @Watch('value')
+  onUpdateNote(value: string) {
+    this.$emit('update:notes', value);
+  }
 }
 </script>
 

@@ -22,11 +22,12 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class numberPad extends Vue {
-  output = '0';
+  @Prop(Number) readonly amount!: number;
+  output = this.amount.toString();
 
   inputContent(event: MouseEvent) {
     const button = (event.target as HTMLButtonElement);
@@ -35,8 +36,10 @@ export default class numberPad extends Vue {
       return;
     }
     if (this.output === '0') {
-      if ('123456789'.indexOf(input) >= 0) {
+      if ('1234567890'.indexOf(input) >= 0) {
         this.output = input;
+      } else if (input === '.') {
+        this.output += input;
       }
       return;
     }
@@ -59,7 +62,7 @@ export default class numberPad extends Vue {
   }
 
   ok() {
-      return
+    this.$emit('update:amount', parseFloat(this.output));
   }
 }
 </script>
