@@ -22,6 +22,7 @@ import labelListModel from '@/model/labelListModel';
 @Component({
   components: {Types, Tags, Notes, NumberPad}
 })
+
 export default class Money extends Vue {
   record: RecordItem = {
     tage: [],
@@ -29,7 +30,7 @@ export default class Money extends Vue {
     note: '',
     amount: 0
   };
-  dataSource = labelListModel.data.map(item => item.name)
+  dataSource = labelListModel.data.map(item => item.name);
   recordList = recordListModel.fetch();
 
   onUpdateTag(value: string[]) {
