@@ -30,7 +30,7 @@ export default class Money extends Vue {
     amount: 0
   };
   dataSource = ['衣', '食', '住', '行'];
-  recordList: RecordItem[] = model.fetch()
+  recordList = model.fetch()
 
   onUpdateTag(value: string[]) {
     this.record.tage = value;
