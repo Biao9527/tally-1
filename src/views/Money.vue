@@ -15,8 +15,8 @@ import NumberPad from '@/components/money/NumberPad.vue';
 import Notes from '@/components/money/Notes.vue';
 import Tags from '@/components/money/Tags.vue';
 import Types from '@/components/money/Types.vue';
-import model from '@/model';
-
+import recordListModel from '@/model/recordListModel';
+import labelListModel from '@/model/labelListModel';
 
 
 @Component({
@@ -29,20 +29,22 @@ export default class Money extends Vue {
     note: '',
     amount: 0
   };
-  dataSource = ['衣', '食', '住', '行'];
-  recordList = model.fetch()
+  dataSource = labelListModel.fetch();
+  recordList = recordListModel.fetch();
 
   onUpdateTag(value: string[]) {
     this.record.tage = value;
   }
-  saveRecordList(){
-    const record2:RecordItem = model.clone(this.record)
-    record2.createdAt = new Date()
-    this.recordList.push(record2)
+
+  saveRecordList() {
+    const record2: RecordItem = recordListModel.clone(this.record);
+    record2.createdAt = new Date();
+    this.recordList.push(record2);
   }
+
   @Watch('recordList')
-  recordListChange(){
-    model.save(this.recordList)
+  recordListChange() {
+    recordListModel.save(this.recordList);
   }
 }
 </script>

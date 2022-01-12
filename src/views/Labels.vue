@@ -1,38 +1,46 @@
 <template>
   <Nav>
     <ul class="tags">
-      <li>
-        <span>衣</span>
-        <Icon name="right"/>
-      </li>
-      <li>
-        <span>食</span>
-        <Icon name="right"/>
-      </li>
-      <li>
-        <span>住</span>
-        <Icon name="right"/>
-      </li>
-      <li>
-        <span>行</span>
+      <li v-for="tag in tags" :key="tag">
+        <span>{{ tag }}</span>
         <Icon name="right"/>
       </li>
     </ul>
     <div class="wrapper">
-      <button class="createTag">新建标签</button>
+      <button class="createTag" @click="createTag">新建标签</button>
     </div>
   </Nav>
 </template>
 
 <script lang="ts">
-export default {
-  name: 'Labels'
-};
+import Vue from 'vue';
+import {Component} from 'vue-property-decorator';
+import labelListModel from '@/model/labelListModel';
+
+labelListModel.save();
+labelListModel.fetch();
+@Component
+export default class Labels extends Vue {
+  tags = labelListModel.data;
+
+  createTag() {
+    const name = window.prompt();
+    if (name) {
+      const message = labelListModel.create(name);
+      if (message === 'succeed') {
+        window.alert('创建成功');
+      } else if (message === 'duplicated') {
+        window.alert('标签名重复');
+      }
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
 .tags {
   font-size: 16px;
+
   li {
     background: #ffffff;
     margin-bottom: 12px;
@@ -41,6 +49,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     padding: 0 16px;
+
     svg {
       height: 24px;
       width: 24px;
@@ -48,11 +57,13 @@ export default {
     }
   }
 }
-.wrapper{
+
+.wrapper {
   display: flex;
   justify-content: center;
   margin-top: 44px;
-  .createTag{
+
+  .createTag {
     font-size: 16px;
     border: none;
     background: #ff852a;
