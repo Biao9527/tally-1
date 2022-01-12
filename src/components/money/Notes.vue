@@ -2,7 +2,8 @@
   <table class="notes">
         <span>
          <Icon name="remark"/>
-          备注:</span>
+          备注:
+        </span>
     <input type="text" v-model="value" placeholder="在这里输入备注">
   </table>
 </template>
