@@ -1,18 +1,23 @@
 const localStorageKey = 'labelList';
 
-type recordListModel = {
-  data: string[]
+type Tag = {
+  id: string
+  name: string
+}
+type RecordListModel = {
+  data: Tag[]
   create: (name: string) => 'succeed' | 'duplicated'
-  fetch: () => string[]
+  fetch: () => Tag[]
   save: () => void
 }
-const recordListModel: recordListModel = {
-  data: ['衣', '食', '住', '行'],
+const recordListModel: RecordListModel = {
+  data: [],
   create(name: string) {
-    if (this.data.indexOf(name) >= 0) {
+    const names = this.data.map(item => item.name)
+    if (names.indexOf(name) >= 0) {
       return 'duplicated';
     }
-    this.data.push(name);
+    this.data.push({id:name ,name: name});
     this.save();
     return 'succeed';
   },

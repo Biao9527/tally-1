@@ -1,8 +1,8 @@
 <template>
   <Nav>
     <ul class="tags">
-      <li v-for="tag in tags" :key="tag">
-        <span>{{ tag }}</span>
+      <li v-for="tag in tags" :key="tag.id">
+        <span>{{ tag.name }}</span>
         <Icon name="right"/>
       </li>
     </ul>
@@ -17,7 +17,6 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import labelListModel from '@/model/labelListModel';
 
-labelListModel.save();
 labelListModel.fetch();
 @Component
 export default class Labels extends Vue {
@@ -25,7 +24,9 @@ export default class Labels extends Vue {
 
   createTag() {
     const name = window.prompt();
-    if (name) {
+    if (name === '') {
+      window.alert('标签名不能为空');
+    }else if (name){
       const message = labelListModel.create(name);
       if (message === 'succeed') {
         window.alert('创建成功');

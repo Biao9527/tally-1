@@ -29,7 +29,7 @@ export default class Money extends Vue {
     note: '',
     amount: 0
   };
-  dataSource = labelListModel.fetch();
+  dataSource = labelListModel.data.map(item => item.name)
   recordList = recordListModel.fetch();
 
   onUpdateTag(value: string[]) {
