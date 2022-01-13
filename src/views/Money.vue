@@ -1,7 +1,10 @@
 <template>
   <Nav class-prefix="nav">
     <NumberPad :amount.sync="record.amount" @submit="saveRecordList"/>
-    <Notes :notes.sync="record.note"/>
+    <Notes
+      filterName="备注："
+      placeholder="在这里输入备注"
+      :notes.sync="record.note"/>
     <Tags :dataSource.sync="dataSource" @update:value="onUpdateTag"/>
     <Types :type.sync="record.type"/>
   </Nav>

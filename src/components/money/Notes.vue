@@ -2,9 +2,9 @@
   <table class="notes">
         <span>
          <Icon name="remark"/>
-          备注:
+          {{ filterName }}
         </span>
-    <input type="text" v-model="value" placeholder="在这里输入备注">
+    <input type="text" v-model="value" :placeholder="placeholder">
   </table>
 </template>
 
@@ -15,6 +15,8 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
 @Component
 export default class notes extends Vue {
   @Prop(String) readonly notes!: string;
+  @Prop({required:true}) readonly  filterName!: string
+  @Prop() readonly placeholder?: string
   value = '';
 
   @Watch('value')
