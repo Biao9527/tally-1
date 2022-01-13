@@ -1,7 +1,7 @@
 <template>
   <Nav class-prefix="nav">
     <NumberPad :amount.sync="record.amount" @submit="saveRecordList"/>
-    <Notes
+    <FormItem
       filterName="备注："
       placeholder="在这里输入备注"
       :notes.sync="record.note"/>
@@ -15,7 +15,7 @@
 import Vue from 'vue';
 import {Component, Watch} from 'vue-property-decorator';
 import NumberPad from '@/components/money/NumberPad.vue';
-import Notes from '@/components/money/Notes.vue';
+import FormItem from '@/components/money/FormItem.vue';
 import Tags from '@/components/money/Tags.vue';
 import Types from '@/components/money/Types.vue';
 import recordListModel from '@/model/recordListModel';
@@ -23,7 +23,7 @@ import labelListModel from '@/model/labelListModel';
 
 
 @Component({
-  components: {Types, Tags, Notes, NumberPad}
+  components: {Types, Tags, FormItem, NumberPad}
 })
 
 export default class Money extends Vue {
