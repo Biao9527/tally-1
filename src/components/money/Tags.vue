@@ -42,7 +42,7 @@ export default class Tags extends Vue {
         const message = labelListModel.create(name!);
         if (message === 'succeed') {
           window.alert('创建成功');
-          // this.$emit('update:dataSource', [...this.dataSource, name]);
+          this.$emit('update:dataSource', [...this.dataSource, name]);
         } else if (message === 'duplicated') {
           window.alert('标签名重复');
         }

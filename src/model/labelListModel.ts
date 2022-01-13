@@ -1,3 +1,6 @@
+import createId from '@/lib/createId';
+
+
 const localStorageKey = 'labelList';
 
 type Tag = {
@@ -19,7 +22,9 @@ const recordListModel: RecordListModel = {
     if (names.indexOf(name) >= 0) {
       return 'duplicated';
     }
-    this.data.push({id: name, name: name});
+    const id = createId().toString();
+    console.log(id);
+    this.data.push({id: id, name: name});
     this.save();
     return 'succeed';
   },
