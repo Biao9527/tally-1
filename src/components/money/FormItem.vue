@@ -4,7 +4,7 @@
          <Icon name="remark"/>
           {{ filterName }}
         </span>
-    <input type="text" v-model="value" :placeholder="placeholder">
+    <input type="text" :value="value" @input="onUpdateNote($event.target.value)" :placeholder="placeholder">
   </table>
 </template>
 
@@ -15,9 +15,9 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
 @Component
 export default class FormItem extends Vue {
   @Prop(String) readonly notes!: string;
-  @Prop({required:true}) readonly  filterName!: string
-  @Prop() readonly placeholder?: string
-  value = '';
+  @Prop({required: true}) readonly filterName!: string;
+  @Prop() readonly placeholder?: string;
+  @Prop({default: ''}) readonly value!: string;
 
   @Watch('value')
   onUpdateNote(value: string) {
