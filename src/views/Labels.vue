@@ -44,6 +44,8 @@ export default class Labels extends Vue {
 <style lang="scss" scoped>
 .tags {
   font-size: 16px;
+  max-height: 70vh;
+  overflow: auto;
   .tag {
     color: #333333;
     background: #ffffff;
