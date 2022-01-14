@@ -23,7 +23,6 @@ const recordListModel: RecordListModel = {
       return 'duplicated';
     }
     const id = createId().toString();
-    console.log(id);
     this.data.push({id: id, name: name});
     this.save();
     return 'succeed';

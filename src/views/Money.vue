@@ -5,7 +5,7 @@
       filterName="备注："
       placeholder="在这里输入备注"
       :notes.sync="record.note"/>
-    <Tags :dataSource.sync="dataSource" @update:value="onUpdateTag"/>
+    <Tags :dataSource.sync="tags" @update:value="onUpdateTag"/>
     <Types :type.sync="record.type"/>
   </Nav>
 </template>
@@ -19,7 +19,6 @@ import FormItem from '@/components/money/FormItem.vue';
 import Tags from '@/components/money/Tags.vue';
 import Types from '@/components/money/Types.vue';
 import recordListModel from '@/model/recordListModel';
-import labelListModel from '@/model/labelListModel';
 
 
 @Component({
@@ -33,7 +32,7 @@ export default class Money extends Vue {
     note: '',
     amount: 0
   };
-  dataSource = labelListModel.data.map(item => item.name);
+  tags = window.tagList.map(item => item.name);
   recordList = recordListModel.fetch();
 
   onUpdateTag(value: string[]) {

@@ -15,22 +15,20 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import labelListModel from '@/model/labelListModel';
 import Button from '@/components/Button.vue';
 
-labelListModel.fetch();
 @Component({
   components: {Button}
 })
 export default class Labels extends Vue {
-  tags = labelListModel.data;
+  tags = window.tagList;
 
   createTag() {
     const name = window.prompt();
     if (name === '') {
       window.alert('标签名不能为空');
-    }else if (name){
-      const message = labelListModel.create(name);
+    } else if (name) {
+      const message = window.createTag(name);
       if (message === 'succeed') {
         window.alert('创建成功');
       } else if (message === 'duplicated') {
@@ -46,6 +44,7 @@ export default class Labels extends Vue {
   font-size: 16px;
   max-height: 70vh;
   overflow: auto;
+
   .tag {
     color: #333333;
     background: #ffffff;

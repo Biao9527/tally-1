@@ -19,7 +19,6 @@
 </template>
 
 <script lang="ts">
-import labelListModel from '@/model/labelListModel';
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import FormItem from '@/components/money/FormItem.vue';
@@ -33,13 +32,8 @@ export default class EditLabel extends Vue {
   tagName: string | undefined;
 
   created() {
-    const id = this.$route.params.id;
-    labelListModel.fetch();
-    const tags = labelListModel.data;
-    const tag = tags.filter(t => t.id === id)[0];
-    if (tag) {
-      this.tag = tag;
-    } else {
+    this.tag = window.findTag(this.$route.params.id);
+    if (!this.tag) {
       this.$router.replace('/404');
     }
   }
@@ -50,7 +44,7 @@ export default class EditLabel extends Vue {
 
   finish() {
     if (this.tag && this.tagName) {
-      const message = labelListModel.update(this.tag.id, this.tagName);
+      const message = window.updateTag(this.tag.id,this.tagName);
       if (message === 'succeed') {
         window.alert('标签修改成功');
       }
@@ -58,12 +52,12 @@ export default class EditLabel extends Vue {
   }
 
   remove() {
-
     if (this.tag) {
-     const message = labelListModel.remove(this.tag.id);
-     if (message){
+     if (window.removeTag(this.tag.id)){
        window.alert('删除成功')
        this.$router.replace('/labels')
+     }else {
+       window.alert('删除失败')
      }
     }
   }
