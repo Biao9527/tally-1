@@ -4,10 +4,10 @@
       <button @click="create">新增标签</button>
     </div>
     <ul class="current">
-      <li v-for="tag in dataSource" :key="tag"
-          :class="{selected: selectTags.indexOf(tag)>=0}"
-          @click="toggle(tag)">
-        {{ tag }}
+      <li v-for="tag in tagList" :key="tag.id"
+          :class="{selected: selectTags.indexOf(tag.name)>=0}"
+          @click="toggle(tag.name)">
+        {{ tag.name }}
       </li>
     </ul>
   </div>
@@ -20,8 +20,8 @@ import store from '@/store/index2';
 
 @Component
 export default class Tags extends Vue {
-  @Prop(Array) dataSource: string[] | undefined;
-  selectTags: string[] = [];
+  @Prop() selectTags! : string[]
+  tagList = store.fetchTag()
 
   toggle(tag: string) {
     const index = this.selectTags.indexOf(tag);
@@ -30,23 +30,19 @@ export default class Tags extends Vue {
     } else {
       this.selectTags.push(tag);
     }
-    this.$emit('update:value', this.selectTags);
   }
 
   create() {
     const name = window.prompt();
-    if (name === '') {
+    if (!name) {
       window.alert('标签名不能为空');
     } else {
-      if (this.dataSource) {
         const message = store.createTag(name!);
         if (message === 'succeed') {
           window.alert('创建成功');
-          this.$emit('update:dataSource', [...this.dataSource, name]);
         } else if (message === 'duplicated') {
           window.alert('标签名重复');
         }
-      }
     }
   }
 }

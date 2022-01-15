@@ -5,7 +5,7 @@
       filterName="备注："
       placeholder="在这里输入备注"
       :notes.sync="record.note"/>
-    <Tags :dataSource.sync="tags" @update:value="onUpdateTag"/>
+    <Tags :select-tags.sync="record.tage"/>
     <Types :type.sync="record.type"/>
   </Nav>
 </template>
@@ -31,12 +31,7 @@ export default class Money extends Vue {
     note: '',
     amount: 0
   };
-  tags = store.tagList.map(item => item.name);
   recordList = store.recordList;
-
-  onUpdateTag(value: string[]) {
-    this.record.tage = value;
-  }
 
   saveRecordList() {
     store.createRecord(this.record);
