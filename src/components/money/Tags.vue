@@ -16,6 +16,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
+import store from '@/store/index2';
 
 @Component
 export default class Tags extends Vue {
@@ -38,7 +39,7 @@ export default class Tags extends Vue {
       window.alert('标签名不能为空');
     } else {
       if (this.dataSource) {
-        const message = window.createTag(name!);
+        const message = store.createTag(name!);
         if (message === 'succeed') {
           window.alert('创建成功');
           this.$emit('update:dataSource', [...this.dataSource, name]);

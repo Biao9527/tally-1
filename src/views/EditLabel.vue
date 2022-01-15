@@ -23,6 +23,7 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import FormItem from '@/components/money/FormItem.vue';
 import Button from '@/components/Button.vue';
+import store from '@/store/index2';
 
 @Component({
   components: {Button, FormItem}
@@ -32,7 +33,7 @@ export default class EditLabel extends Vue {
   tagName: string | undefined;
 
   created() {
-    this.tag = window.findTag(this.$route.params.id);
+    this.tag = store.findTag(this.$route.params.id);
     if (!this.tag) {
       this.$router.replace('/404');
     }
@@ -44,7 +45,7 @@ export default class EditLabel extends Vue {
 
   finish() {
     if (this.tag && this.tagName) {
-      const message = window.updateTag(this.tag.id,this.tagName);
+      const message = store.updateTag(this.tag.id,this.tagName);
       if (message === 'succeed') {
         window.alert('标签修改成功');
       }
@@ -53,7 +54,7 @@ export default class EditLabel extends Vue {
 
   remove() {
     if (this.tag) {
-     if (window.removeTag(this.tag.id)){
+     if (store.removeTag(this.tag.id)){
        window.alert('删除成功')
        this.$router.replace('/labels')
      }else {

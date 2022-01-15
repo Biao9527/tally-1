@@ -17,11 +17,3 @@ type RecordListModel = {
   update: (id: string, name: string) => 'succeed' | 'duplicated' | 'no found'
   remove: (id: string) => boolean
 }
-
-interface Window {
-  tagList: Tag[];
-  createTag: (name: string) => 'succeed' | 'duplicated';
-  removeTag: (id: string) => boolean;
-  updateTag: (id: string, name: string) => 'succeed' | 'duplicated' | 'no found';
-  findTag: (id:string) => Tag
-}
