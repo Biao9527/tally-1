@@ -3,7 +3,7 @@
     <div class="nacBar">
       <Icon name="left" @click.native="back"/>
       <span>编辑标签</span>
-        <Icon name="finish" @click.native="finish"/>
+      <Icon name="finish" @click.native="finish"/>
     </div>
     <div class="form-wrapper">
       <FormItem
@@ -23,17 +23,20 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import FormItem from '@/components/money/FormItem.vue';
 import Button from '@/components/Button.vue';
-import store from '@/store/index2';
+import store from '@/store/index.ts';
 
 @Component({
-  components: {Button, FormItem}
+  components: {Button, FormItem},
 })
 export default class EditLabel extends Vue {
-  tag?: { id: string, name: string } = undefined;
+  get tag() {
+    return store.state.currentTag;
+  }
+
   tagName: string | undefined;
 
   created() {
-    this.tag = store.findTag(this.$route.params.id);
+    store.commit('setCurrentTag', this.$route.params.id);
     if (!this.tag) {
       this.$router.replace('/404');
     }
@@ -45,25 +48,19 @@ export default class EditLabel extends Vue {
 
   finish() {
     if (this.tag && this.tagName) {
-      const message = store.updateTag(this.tag.id,this.tagName);
-      if (message === 'succeed') {
-        window.alert('标签修改成功');
-      }
+      store.commit('updateTag',{id:this.tag.id, name:this.tagName});
     }
   }
 
   remove() {
     if (this.tag) {
-     if (store.removeTag(this.tag.id)){
-       window.alert('删除成功')
-       this.$router.replace('/labels')
-     }else {
-       window.alert('删除失败')
-     }
+      store.commit('removeTag', this.tag.id);
+      this.$router.replace('/labels');
     }
   }
-  back(){
-    this.$router.replace('/labels')
+
+  back() {
+    this.$router.replace('/labels');
   }
 }
 </script>

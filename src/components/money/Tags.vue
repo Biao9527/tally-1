@@ -16,12 +16,18 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
-import store from '@/store/index2';
+import store from '@/store/index.ts';
 
-@Component
+@Component({
+})
 export default class Tags extends Vue {
-  @Prop() selectTags! : string[]
-  tagList = store.fetchTag()
+  @Prop() selectTags!: string[];
+  get tagList() {
+    return store.state.tagList;
+  }
+  created() {
+    this.$store.commit('fetchTag');
+  }
 
   toggle(tag: string) {
     const index = this.selectTags.indexOf(tag);
@@ -37,12 +43,7 @@ export default class Tags extends Vue {
     if (!name) {
       window.alert('标签名不能为空');
     } else {
-        const message = store.createTag(name!);
-        if (message === 'succeed') {
-          window.alert('创建成功');
-        } else if (message === 'duplicated') {
-          window.alert('标签名重复');
-        }
+      store.commit('createTag', name);
     }
   }
 }
