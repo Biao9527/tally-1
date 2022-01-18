@@ -35,7 +35,6 @@ const store = new Vuex.Store({
     },
     saveTag(state) {
       window.localStorage.setItem('labelList', JSON.stringify(state.tagList));
-      console.log('保存成功');
     },
     setCurrentTag(state, id: string) {
       state.currentTag = state.tagList.filter(t => t.id === id)[0];
