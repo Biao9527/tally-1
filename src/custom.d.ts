@@ -3,9 +3,15 @@ type RecordItem = {
   type: string
   note: string
   amount: number
-  createdAt?: Date
+  createdAt?: string
 }
 type Tag = {
   id: string
   name: string
+}
+
+type RootStore = {
+  recordList: RecordItem[],
+  tagList: Tag[],
+  currentTag?: Tag
 }
