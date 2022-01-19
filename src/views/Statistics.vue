@@ -5,12 +5,12 @@
       <Tabs class-prefix="tab" :data-source="tabList" :value.sync="tab"/>
     </div>
     <ol class="entry">
-      <li v-for="(group,index) in result" :key="index" class="group">
-        <h3 class="title">{{ group.title }}</h3>
+      <li v-for="(group,index) in groupList" :key="index" class="group">
+        <h3 class="title">{{ beautify(group.title) }}</h3>
         <ol>
           <li v-for="(item,index) in group.items" :key="index" class="result">
             <span>{{ tagString(item.tage) }}</span>
-            <span class="note">备注：{{item.note||'无'}}</span>
+            <span class="note">备注：{{ item.note || '无' }}</span>
             <span>￥{{ item.amount }}</span>
           </li>
         </ol>
@@ -26,6 +26,8 @@ import Tabs from '@/components/Tabs.vue';
 import typeList from '@/constants/typeList';
 import tabList from '@/constants/tabList';
 import store from '@/store';
+import dayjs from 'dayjs';
+import clone from '@/lib/clone';
 
 type HashTableValue = {
   title: string,
@@ -35,33 +37,58 @@ type HashTableValue = {
   components: {Tabs}
 })
 export default class Statistics extends Vue {
+  tab = 'day';
+  type = '-';
+  tabList = tabList;
+  typeList = typeList;
+
   get recordList() {
     return store.state.recordList;
   }
 
-  get result() {
+  get groupList() {
     const {recordList} = this;
-    const hashTable: { [key: string]: HashTableValue } = {};
-    for (let i = 0; i < recordList.length; i++) {
-      const [date, time] = recordList[i].createdAt!.split('T');
-      hashTable[date] = hashTable[date] || {title: date, items: []};
-      hashTable[date].items.push(recordList[i]);
+    if (recordList.length === 0) {
+      return [];
     }
-    return hashTable;
-  }
-
-  tagString(tags: string[]) {
-    return tags.length === 0 ? '无' : tags.join(' , ');
+    const newList = clone(recordList).sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
+    const result = [{title: dayjs(newList[0].createdAt).format('YYYY-MM-DD'), items: [newList[0]]}];
+    for (let i = 1; i < newList.length; i++) {
+      const newItem = newList[i]
+      const lastItem = result[result.length-1]
+      if (dayjs(lastItem.title).isSame(dayjs(newItem.createdAt),'day')){
+        lastItem.items.push(newItem)
+      }else {
+        result.push({title: dayjs(newItem.createdAt).format('YYYY-MM-DD'),items: [newItem]})
+      }
+    }
+    console.log(result);
+    return result;
   }
 
   created() {
     store.commit('fetchRecord');
   }
 
-  tab = 'day';
-  type = '-';
-  tabList = tabList;
-  typeList = typeList;
+  tagString(tags: string[]) {
+    return tags.length === 0 ? '无' : tags.join(' , ');
+  }
+
+  beautify(date: string) {
+    const day = dayjs(date);
+    const now = dayjs();
+    if (day.isSame(now, 'day')) {
+      return '今天';
+    } else if (day.isSame(now.subtract(1, 'day'), 'day')) {
+      return '昨天';
+    } else if (day.isSame(now.subtract(2, 'day'), 'day')) {
+      return '前天';
+    } else if (day.isSame(now, 'year')) {
+      return day.format('M月D日');
+    } else {
+      return day.format('YYYY年M月D日');
+    }
+  }
 }
 </script>
 
@@ -102,6 +129,7 @@ export default class Statistics extends Vue {
 
 .entry {
   margin-top: 20px;
+
   .group {
     .title {
       padding: 6px 16px;
@@ -119,7 +147,8 @@ export default class Statistics extends Vue {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #f2f2f2;
-    .note{
+
+    .note {
       margin-right: auto;
       margin-left: 16px;
       color: #999999;
