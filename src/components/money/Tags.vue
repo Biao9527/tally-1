@@ -40,10 +40,17 @@ export default class Tags extends Vue {
 
   create() {
     const name = window.prompt();
-    if (!name) {
-      window.alert('标签名不能为空');
-    } else {
+    if (name === null){
+      return
+    }else {
       store.commit('createTag', name);
+      if (store.state.tagsError === 'empty'){
+        window.alert('标签名不能为空');
+      }else if (store.state.tagsError === 'duplicated'){
+        window.alert('标签名重复');
+      }else if (store.state.tagsError === 'succeed'){
+        window.alert('创建成功');
+      }
     }
   }
 }

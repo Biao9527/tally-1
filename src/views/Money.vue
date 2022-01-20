@@ -4,7 +4,8 @@
     <FormItem
       filterName="备注："
       placeholder="在这里输入备注"
-      :notes.sync="record.note"/>
+      :notes.sync="record.note"
+      :value="record.note"/>
     <Tags :select-tags.sync="record.tage"/>
     <Tabs :data-source="typeList" :value.sync="record.type"/>
   </Nav>
@@ -44,7 +45,14 @@ export default class Money extends Vue {
   }
 
   saveRecordList() {
+    if (this.record.tage.length === 0) {
+      return window.alert('请至少选择一个标签');
+    }
     this.$store.commit('createRecord', this.record);
+    window.alert('已保存');
+    this.record.note = '';
+    this.record.amount = 0;
+    this.record.tage = []
   }
 }
 </script>

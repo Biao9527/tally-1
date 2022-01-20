@@ -6,12 +6,12 @@
     </div>
     <ol class="entry">
       <li v-for="(group,index) in groupList" :key="index" class="group">
-        <h3 class="title">{{ beautify(group.title) }}</h3>
+        <h3 class="title">{{ beautify(group.title) }}<span>{{ type }}￥{{ group.total }}</span></h3>
         <ol>
           <li v-for="(item,index) in group.items" :key="index" class="result">
             <span>{{ tagString(item.tage) }}</span>
             <span class="note">备注：{{ item.note || '无' }}</span>
-            <span>￥{{ item.amount }}</span>
+            <span>{{ item.type }}￥{{ item.amount }}</span>
           </li>
         </ol>
       </li>
@@ -29,10 +29,7 @@ import store from '@/store';
 import dayjs from 'dayjs';
 import clone from '@/lib/clone';
 
-type HashTableValue = {
-  title: string,
-  items: RecordItem[]
-}
+
 @Component({
   components: {Tabs}
 })
@@ -51,18 +48,25 @@ export default class Statistics extends Vue {
     if (recordList.length === 0) {
       return [];
     }
-    const newList = clone(recordList).sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
-    const result = [{title: dayjs(newList[0].createdAt).format('YYYY-MM-DD'), items: [newList[0]]}];
+    const filterList = clone(recordList).filter(item => item.type === this.type);
+    if (filterList.length === 0) {
+      return [];
+    }
+    type Result = { title: string, total?: number, items: RecordItem[] }[]
+    const newList = filterList.sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
+    const result: Result = [{title: dayjs(newList[0].createdAt).format('YYYY-MM-DD'), items: [newList[0]]}];
     for (let i = 1; i < newList.length; i++) {
-      const newItem = newList[i]
-      const lastItem = result[result.length-1]
-      if (dayjs(lastItem.title).isSame(dayjs(newItem.createdAt),'day')){
-        lastItem.items.push(newItem)
-      }else {
-        result.push({title: dayjs(newItem.createdAt).format('YYYY-MM-DD'),items: [newItem]})
+      const newItem = newList[i];
+      const lastItem = result[result.length - 1];
+      if (dayjs(lastItem.title).isSame(dayjs(newItem.createdAt), 'day')) {
+        lastItem.items.push(newItem);
+      } else {
+        result.push({title: dayjs(newItem.createdAt).format('YYYY-MM-DD'), items: [newItem]});
       }
     }
-    console.log(result);
+    result.map(group => {
+      group.total = group.items.reduce((sum, item) => sum + item.amount, 0);
+    });
     return result;
   }
 
@@ -132,6 +136,8 @@ export default class Statistics extends Vue {
 
   .group {
     .title {
+      display: flex;
+      justify-content: space-between;
       padding: 6px 16px;
       font-size: 18px;
       background: #ff852a;
@@ -142,7 +148,7 @@ export default class Statistics extends Vue {
   .result {
     min-height: 38px;
     background: #ffffff;
-    padding: 0px 16px;
+    padding: 0 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;

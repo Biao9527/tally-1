@@ -8,6 +8,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     recordList: [] as RecordItem[],
+    tagsError: null,
     tagList: [] as Tag[],
     currentTag: undefined
   } as RootStore,
@@ -28,6 +29,12 @@ const store = new Vuex.Store({
     //tags
     fetchTag(state) {
       state.tagList = JSON.parse(window.localStorage.getItem('labelList') || '[]');
+      if (!state.tagList || state.tagList.length === 0){
+        store.commit('createTag','衣')
+        store.commit('createTag','食')
+        store.commit('createTag','住')
+        store.commit('createTag','行')
+      }
     },
     saveTag(state) {
       window.localStorage.setItem('labelList', JSON.stringify(state.tagList));
@@ -38,16 +45,15 @@ const store = new Vuex.Store({
     createTag(state, name: string) {
       const names = state.tagList.map(item => item.name);
       if (name === '') {
-        window.alert('标签名不能为空');
-        return;
+        return state.tagsError = 'empty'
       }
       if (names.indexOf(name) >= 0) {
-        window.alert('标签名重复');
+        return state.tagsError = 'duplicated'
       } else {
         const id = createId().toString();
         state.tagList.push({id: id, name: name});
         store.commit('saveTag');
-        window.alert('创建成功');
+        state.tagsError = 'succeed'
       }
     },
     removeTag(state, id: string) {

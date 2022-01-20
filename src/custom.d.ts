@@ -12,6 +12,7 @@ type Tag = {
 
 type RootStore = {
   recordList: RecordItem[],
+  tagsError: 'empty' | 'duplicated' | 'succeed' | null,
   tagList: Tag[],
   currentTag?: Tag
 }
