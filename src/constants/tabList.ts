@@ -1,6 +1,5 @@
-const tabList = [{text: '按天', value: 'day'},
-  {text: '按周', value: 'week'},
-  {text: '按月', value: 'month'}
+const tabList = [{text: '列表', value: 'list'},
+  {text: '图表', value: 'chart'},
 ];
 
 export default tabList;

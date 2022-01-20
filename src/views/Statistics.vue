@@ -4,7 +4,7 @@
     <div class="tab-wrapper">
       <Tabs class-prefix="tab" :data-source="tabList" :value.sync="tab"/>
     </div>
-    <ol class="entry">
+    <ol class="entry" v-if="groupList.length > 0">
       <li v-for="(group,index) in groupList" :key="index" class="group">
         <h3 class="title">{{ beautify(group.title) }}<span>{{ type }}￥{{ group.total }}</span></h3>
         <ol>
@@ -16,6 +16,9 @@
         </ol>
       </li>
     </ol>
+    <div v-else class="none">
+      暂无数据
+    </div>
   </Nav>
 </template>
 
@@ -97,6 +100,10 @@ export default class Statistics extends Vue {
 </script>
 
 <style scoped lang="scss">
+.none{
+  padding-top: 20px;
+  text-align: center;
+}
 .tab-wrapper {
   display: flex;
   justify-content: center;
