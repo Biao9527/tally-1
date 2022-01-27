@@ -48,6 +48,8 @@ export default class Tags extends Vue {
         window.alert('标签名不能为空');
       }else if (store.state.tagsError === 'duplicated'){
         window.alert('标签名重复');
+      }else if (store.state.tagsError === 'overlong'){
+        window.alert('标签名过长');
       }else if (store.state.tagsError === 'succeed'){
         window.alert('创建成功');
       }

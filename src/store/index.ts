@@ -49,7 +49,9 @@ const store = new Vuex.Store({
       }
       if (names.indexOf(name) >= 0) {
         return state.tagsError = 'duplicated'
-      } else {
+      } else if (name.length>5){
+        return state.tagsError = 'overlong'
+      }else {
         const id = createId().toString();
         state.tagList.push({id: id, name: name});
         store.commit('saveTag');
@@ -79,7 +81,9 @@ const store = new Vuex.Store({
         const names = state.tagList.map(item => item.name);
         if (names.indexOf(name) >= 0) {
           window.alert('标签名重复');
-        } else {
+        } else if(name.length>5){
+          window.alert('标签名过长')
+        }else {
           const tag = state.tagList.filter(item => item.id === id)[0];
           tag.name = name;
           store.commit('saveTag');

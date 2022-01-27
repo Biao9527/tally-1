@@ -15,4 +15,8 @@ body{
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
 }
+#app{
+  max-width: 500px;
+  margin: auto;
+}
 </style>
