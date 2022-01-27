@@ -1,6 +1,8 @@
 <template>
   <div >
-    {{type}}
+    <div class="title">
+     {{type}}
+    </div>
     <div id="chartPie" class="pie-wrap" ></div>
   </div>
 </template>
@@ -20,7 +22,7 @@ export default {
     },
     tags() {
       return store.state.tagList;
-    }
+    },
   },
 
   data() {
@@ -30,50 +32,61 @@ export default {
     };
   },
   created() {
-    const filterRecord = clone(this.recordList).filter(item => item.type === this.type)
-    const newTags = [];
     store.commit('fetchTag');
     store.commit('fetchRecord');
-    for (let i = 0; i < this.tags.length; i++) {
-      newTags.push(this.tags[i].name);
-    }
-    for (let i = 0; i < newTags.length; i++) {
-      let sum = 0;
-      for (let j = 0; j < filterRecord.length; j++) {
-        if (filterRecord[j].tage.toString().indexOf(newTags[i]) >= 0) {
-          sum += filterRecord[j].amount;
-        }
-      }
-      this.chart.push({value: sum, name: newTags[i]});
-    }
+    this.init()
   },
   mounted() {
     this.$nextTick(() => {
       this.drawPieChart();
     });
   },
+  updated() {
+    this.init()
+    this.$nextTick(() => {
+      this.drawPieChart();
+    });
+  },
   methods: {
+    init(){
+      this.chart =[]
+      const filterRecord = clone(this.recordList).filter(item => item.type === this.type)
+      const newTags = [];
+      for (let i = 0; i < this.tags.length; i++) {
+        newTags.push(this.tags[i].name);
+      }
+      for (let i = 0; i < newTags.length; i++) {
+        let sum = 0;
+        for (let j = 0; j < filterRecord.length; j++) {
+          if (filterRecord[j].tage.toString().indexOf(newTags[i]) >= 0) {
+            sum += filterRecord[j].amount;
+          }
+        }
+        this.chart.push({value: sum, name: newTags[i]});
+      }
+    },
     drawPieChart() {
+      let title = this.type === '-' ?title = '支出统计':title = '收入统计'
       let mytextStyle = {
         color: '#333',
         fontSize: 25,
       };
       let mylabel = {
-        show: true,
+        show: false,
         position: 'right',
         offset: [30, 60],
-        formatter: '{b} : {c} ({d}%)',
+        formatter: '{c} ({d}%)',
         textStyle: mytextStyle
       };
       this.chartPie = echarts.init(document.getElementById('chartPie'), 'macarons');
       this.chartPie.setOption({
         title: {
-          text: '统计表',
+          text: title,
           x: 'center'
         },
         tooltip: {
           trigger: 'item',
-          formatter: '{a} <br/>{b} : {c} ({d}%)',
+          formatter: '{c} ({d}%)',
         },
         legend: {
           data: this.tags,
@@ -105,5 +118,8 @@ export default {
 .pie-wrap {
   width: 100%;
   min-height: 400px;
+}
+.title{
+  display: none;
 }
 </style>
