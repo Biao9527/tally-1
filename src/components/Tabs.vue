@@ -1,8 +1,9 @@
 <template>
   <ul class="tabs">
     <li v-for="item in dataSource" :key="item.value" class="tabs-item"
-    :class="{[classPrefix+'-item']:classPrefix,selected: item.value === value}"
-    @click="setSelected(item.value)">{{item.text}}</li>
+        :class="{[classPrefix+'-item']:classPrefix,selected: item.value === value}"
+        @click="setSelected(item.value)">{{ item.text }}
+    </li>
   </ul>
 </template>
 
@@ -10,18 +11,18 @@
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
 
-type DataSourceItem= {
+type DataSourceItem = {
   text: string
   value: string
 }
 @Component
 export default class Tabs extends Vue {
-  @Prop({required:true,type:Array}) readonly dataSource!: DataSourceItem[]
-  @Prop(String) readonly value!: string
-  @Prop(String) readonly classPrefix! :string
+  @Prop({required: true, type: Array}) readonly dataSource!: DataSourceItem[];
+  @Prop(String) readonly value!: string;
+  @Prop(String) readonly classPrefix!: string;
 
-  setSelected(value:string){
-    this.$emit('update:value',value)
+  setSelected(value: string) {
+    this.$emit('update:value', value);
   }
 }
 </script>

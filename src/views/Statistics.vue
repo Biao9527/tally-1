@@ -4,18 +4,23 @@
     <div class="tab-wrapper">
       <Tabs class-prefix="tab" :data-source="tabList" :value.sync="tab"/>
     </div>
-    <ol class="entry" v-if="groupList.length > 0">
-      <li v-for="(group,index) in groupList" :key="index" class="group">
-        <h3 class="title">{{ beautify(group.title) }}<span>{{ type }}￥{{ group.total }}</span></h3>
-        <ol>
-          <li v-for="(item,index) in group.items" :key="index" class="result">
-            <span>{{ tagString(item.tage) }}</span>
-            <span class="note">备注：{{ item.note || '无' }}</span>
-            <span>{{ item.type }}￥{{ item.amount }}</span>
-          </li>
-        </ol>
-      </li>
-    </ol>
+    <div v-if="groupList.length > 0">
+      <ol class="entry" v-if="tab === 'list'">
+        <li v-for="(group,index) in groupList" :key="index" class="group">
+          <h3 class="title">{{ beautify(group.title) }}<span>{{ type }}￥{{ group.total }}</span></h3>
+          <ol>
+            <li v-for="(item,index) in group.items" :key="index" class="result">
+              <span>{{ tagString(item.tage) }}</span>
+              <span class="note">备注：{{ item.note || '无' }}</span>
+              <span>{{ item.type }}￥{{ item.amount }}</span>
+            </li>
+          </ol>
+        </li>
+      </ol>
+      <div class="chart" v-else-if="tab === 'chart'">
+        <Chart :type.sync="type"/>
+      </div>
+    </div>
     <div v-else class="none">
       暂无数据
     </div>
@@ -31,13 +36,14 @@ import tabList from '@/constants/tabList';
 import store from '@/store';
 import dayjs from 'dayjs';
 import clone from '@/lib/clone';
+import Chart from '@/components/Chart.vue';
 
 
 @Component({
-  components: {Tabs}
+  components: {Chart, Tabs}
 })
 export default class Statistics extends Vue {
-  tab = 'day';
+  tab = 'list';
   type = '-';
   tabList = tabList;
   typeList = typeList;
@@ -68,7 +74,7 @@ export default class Statistics extends Vue {
       }
     }
     result.map(group => {
-      group.total = group.items.reduce((sum, item) => sum + item.amount, 0);
+      group.total = parseFloat(group.items.reduce((sum, item) => sum + item.amount, 0).toFixed(2));
     });
     return result;
   }
@@ -100,10 +106,15 @@ export default class Statistics extends Vue {
 </script>
 
 <style scoped lang="scss">
-.none{
+.chart {
+  margin-top: 20px;
+}
+
+.none {
   padding-top: 20px;
   text-align: center;
 }
+
 .tab-wrapper {
   display: flex;
   justify-content: center;
