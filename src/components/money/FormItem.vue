@@ -4,7 +4,11 @@
          <Icon name="remark"/>
           {{ filterName }}
         </span>
-    <input type="text" :value="value" @input="onUpdateNote($event.target.value)" :placeholder="placeholder">
+    <input type="text" :value="value"
+           @input="onUpdateNote($event.target.value)"
+           :placeholder="placeholder"
+           @click="$emit('update:isShow',false)"
+           @blur="$emit('update:isShow',true)">
   </table>
 </template>
 
@@ -18,7 +22,6 @@ export default class FormItem extends Vue {
   @Prop({required: true}) readonly filterName!: string;
   @Prop() readonly placeholder?: string;
   @Prop({default: ''}) readonly value!: string;
-
   onUpdateNote(value: string) {
     this.$emit('update:notes', value);
   }

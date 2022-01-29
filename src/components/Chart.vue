@@ -1,9 +1,9 @@
 <template>
-  <div >
+  <div>
     <div class="title">
-     {{type}}
+      {{ type }}
     </div>
-    <div id="chartPie" class="pie-wrap" ></div>
+    <div id="chartPie" class="pie-wrap"></div>
   </div>
 </template>
 
@@ -34,7 +34,7 @@ export default {
   created() {
     store.commit('fetchTag');
     store.commit('fetchRecord');
-    this.init()
+    this.init();
   },
   mounted() {
     this.$nextTick(() => {
@@ -42,15 +42,15 @@ export default {
     });
   },
   updated() {
-    this.init()
+    this.init();
     this.$nextTick(() => {
       this.drawPieChart();
     });
   },
   methods: {
-    init(){
-      this.chart =[]
-      const filterRecord = clone(this.recordList).filter(item => item.type === this.type)
+    init() {
+      this.chart = [];
+      const filterRecord = clone(this.recordList).filter(item => item.type === this.type);
       const newTags = [];
       for (let i = 0; i < this.tags.length; i++) {
         newTags.push(this.tags[i].name);
@@ -66,9 +66,9 @@ export default {
       }
     },
     drawPieChart() {
-      let title = this.type === '-' ?title = '支出统计':title = '收入统计'
+      let title = this.type === '-' ? title = '支出统计' : title = '收入统计';
       let mytextStyle = {
-        color: '#333',
+        color: '#ff852a',
         fontSize: 25,
       };
       let mylabel = {
@@ -100,6 +100,7 @@ export default {
             type: 'pie',
             radius: ['50%', '70%'],
             center: ['50%', '50%'],
+            textStyle: mytextStyle,
             data: this.chart,
             animationEasing: 'cubicInOut',
             animationDuration: 2600,
@@ -119,7 +120,8 @@ export default {
   width: 100%;
   min-height: 400px;
 }
-.title{
+
+.title {
   display: none;
 }
 </style>

@@ -3,7 +3,7 @@
     <div class="content" :class="classPrefix&&`${classPrefix}-content`">
       <slot/>
     </div>
-    <nav class="nav">
+    <nav class="nav" v-show="isShow">
       <router-link to="/labels" class="item" active-class="selected">
         <Icon name="labels"/>
         <p>标签</p>
@@ -26,7 +26,7 @@
 
 export default {
   name: 'Nav',
-  props: ['classPrefix']
+  props: ['classPrefix' , 'isShow']
 };
 </script>
 
