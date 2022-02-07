@@ -1,5 +1,5 @@
 <template>
-  <Nav>
+  <Nav :is-show="isShow">
     <div class="nacBar">
       <Icon name="left" @click.native="back"/>
       <span>编辑标签</span>
@@ -10,7 +10,8 @@
         @update:notes="onUpdateNotes"
         :value="tag.name"
         filter-name="标签名"
-        placeholder="请输入标签名"/>
+        placeholder="请输入标签名"
+        @update:isShow="show()"/>
     </div>
     <div class="button-wrapper">
       <Button @click="remove">删除标签</Button>
@@ -29,6 +30,7 @@ import store from '@/store/index.ts';
   components: {Button, FormItem},
 })
 export default class EditLabel extends Vue {
+  isShow = true
   get tag() {
     return store.state.currentTag;
   }
@@ -61,6 +63,16 @@ export default class EditLabel extends Vue {
 
   back() {
     this.$router.replace('/labels');
+  }
+  show(){
+    const height = document.body.clientHeight;
+    window.addEventListener('resize', () => {
+      if (document.body.clientHeight < height) {
+        this.isShow = false;
+      } else {
+        this.isShow = true;
+      }
+    });
   }
 }
 </script>

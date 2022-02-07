@@ -1,5 +1,5 @@
 <template>
-  <Nav>
+  <Nav :is-show="true">
     <div class="tags">
       <router-link class="tag" v-for="tag in tags" :key="tag.id" :to="`labels/edit/${tag.id}`">
         <span>{{ tag.name }}</span>
@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 import Button from '@/components/Button.vue';
 import store from '@/store/index.ts';
 

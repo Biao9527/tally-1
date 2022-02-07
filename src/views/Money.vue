@@ -58,7 +58,6 @@ export default class Money extends Vue {
     this.record.tage = [];
   }
   show(){
-    console.log('1');
     const height = document.body.clientHeight;
     window.addEventListener('resize', () => {
       if (document.body.clientHeight < height) {

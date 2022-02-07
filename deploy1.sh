@@ -24,6 +24,6 @@ git commit -m 'deploy'
 #git@github.com:Biao9527/tally-1-website.git
 #gitee仓库
 #git@gitee.com:zhou-zibiao/tally-1-website.git
-git push -f git@gitee.com:zhou-zibiao/tally-1-website.git master:gh-pages
+ git push -f git@github.com:Biao9527/tally-1-website.git master:gh-pages
 
 cd -

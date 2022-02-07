@@ -1,5 +1,5 @@
 <template>
-  <Nav>
+  <Nav :is-show="true">
     <Tabs class-prefix="type" :data-source="typeList" :value.sync="type"/>
     <div class="tab-wrapper">
       <Tabs class-prefix="tab" :data-source="tabList" :value.sync="tab"/>
